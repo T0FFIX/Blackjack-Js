@@ -7,12 +7,16 @@
 </head>
 <body onload="gameStart()">
     <script src="index.js"></script>
+    <h1>Dealer Cards:</h1>
+    <h3 id="dealer-field-cards"></h3>
+    <h5 id="dealer-field-cards-sum"></h5>
+
     <h1>Player Cards:</h1>
-    <h3 id="playing-field"></h3>
-<!--    <h3 id="sum-of-cards" onload=""></h3>-->
-    <button id="button-get-card" onclick="getOneCard()"> Take Card </button>
-<!--    <button id="button-pass" onclick=""> Take Card</button>-->
+    <h3 id="player-field-cards"></h3>
+    <h5 id="player-field-cards-sum"></h5>
+
+    <button id="button-get-card" onclick="takeCard()"> Take Card </button>
     <button id="button-enough" onclick="enough()"> Enough </button>
-    <button id="button-show-my-cards" onclick="showPlayerCards()"> Show my cards </button>
+    <h1 id="game-outcome"></h1>
 </body>
 </html>
