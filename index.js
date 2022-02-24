@@ -1,40 +1,33 @@
-var cardValues = [
-    "A",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "10",
-    "J",
-    "Q",
-    "K"
-];
-// One color of 13 cards eg. Hearts
-let oneColor = shuffleArray(cardValues)
-//Deck of 52 cards
-let playingDeck = oneColor.concat(oneColor,oneColor,oneColor)
+// array of playing cards
+var cardValues = ["A","2","3","4","5","6","7","8","9","10","J","Q","K"];
+// deck of 52 cards
+let playingDeck = cardValues.concat(cardValues,cardValues,cardValues)
+// shuffled deck of 52 cards
 let playingDeckReady = shuffleArray(playingDeck)
+// array of player cards
 let playerCards = []
-let botCards = []
+// array of dealer cards
+let dealerCards = []
 
 function gameStart()
 {
+    // dealing cards for player and dealer
     playerCards.push(getOneCard())
-    botCards.push(getOneCard())
+    dealerCards.push(getOneCard())
+    playerCards.push(getOneCard())
+    dealerCards.push(getOneCard())
 
-    playerCards.push(getOneCard())
+    // show what cards did the player get
     document.getElementById("player-field-cards").textContent = showCards(playerCards)
-    botCards.push(getOneCard())
 
+    // show total points for the player
     document.getElementById("player-field-cards-sum").textContent = checkSumOfCards(playerCards)
-    document.getElementById("dealer-field-cards").textContent = ["? " + botCards[1]]
 
+    // show to player the second card from the dealer
+    document.getElementById("dealer-field-cards").textContent = ["? " + dealerCards[1]]
 }
 
+// get first item for the shuffled deck
 function getOneCard()
 {
     let oneCard = playingDeckReady[0]
@@ -42,13 +35,16 @@ function getOneCard()
     return oneCard
 }
 
+// get one card form deck for player
 function takeCard()
 {
     playerCards.push(getOneCard())
     document.getElementById("player-field-cards").textContent = showCards(playerCards)
     document.getElementById("player-field-cards-sum").textContent = checkSumOfCards(playerCards)
+    // simple check if the player got more than 21 and automatically lost
     if(checkSumOfCards(playerCards) > 21)
     {
+        // start dealer turn to make a decision
         enough()
     }
 }
@@ -63,38 +59,41 @@ function showCards(arr)
     return showCards
 }
 
+// dealer function that makes decisions automatically
 function enough()
 {
-    while (checkSumOfCards(botCards) < 17)
+    while (checkSumOfCards(dealerCards) < 17)
     {
-        botCards.push(getOneCard())
+        dealerCards.push(getOneCard())
     }
-    document.getElementById("dealer-field-cards").textContent = botCards
-    document.getElementById("dealer-field-cards-sum").textContent = checkSumOfCards(botCards)
+    document.getElementById("dealer-field-cards").textContent = dealerCards
+    document.getElementById("dealer-field-cards-sum").textContent = checkSumOfCards(dealerCards)
+    // check function for who won the round
     whoWon()
 }
 
 function whoWon()
 {
-    if(checkSumOfCards(playerCards) > 21 && checkSumOfCards(botCards) > 21)
+    if(checkSumOfCards(playerCards) > 21 && checkSumOfCards(dealerCards) > 21)
     {
+
         document.getElementById("game-outcome").textContent = "Its a draw"
     }
-    else if(checkSumOfCards(playerCards) <= 21 && checkSumOfCards(botCards) > 21)
+    else if(checkSumOfCards(playerCards) <= 21 && checkSumOfCards(dealerCards) > 21)
     {
         document.getElementById("game-outcome").textContent = "Player wins!"
     }
-    else if(checkSumOfCards(playerCards) > 21 && checkSumOfCards(botCards) <= 21)
+    else if(checkSumOfCards(playerCards) > 21 && checkSumOfCards(dealerCards) <= 21)
     {
         document.getElementById("game-outcome").textContent = "Players lose!"
     }
-    else if(checkSumOfCards(playerCards) <= 21 && checkSumOfCards(botCards) <= 21)
+    else if(checkSumOfCards(playerCards) <= 21 && checkSumOfCards(dealerCards) <= 21)
     {
-        if(checkSumOfCards(botCards) > checkSumOfCards(playerCards))
+        if(checkSumOfCards(dealerCards) > checkSumOfCards(playerCards))
         {
             document.getElementById("game-outcome").textContent = "Players lose!"
         }
-        else if(checkSumOfCards(botCards) === checkSumOfCards(playerCards))
+        else if(checkSumOfCards(dealerCards) === checkSumOfCards(playerCards))
         {
             document.getElementById("game-outcome").textContent = "Its a draw"
         }
@@ -105,8 +104,10 @@ function whoWon()
     }
 }
 
+// check the sum of points of the array that has been given
 function checkSumOfCards(arr)
 {
+    // check for aces
     let sumOfCards = 0
     let countAces = 0
     for (let i = 0; i < arr.length; i++) {
@@ -135,6 +136,7 @@ function checkSumOfCards(arr)
         }
     }
 
+    // count aces them accordingly to the rules of Blackjack
     if (sumOfCards === 0 && countAces === 2)
     {
         sumOfCards = 21
@@ -154,6 +156,7 @@ function checkSumOfCards(arr)
     return sumOfCards
 }
 
+// shuffle an given array
 function shuffleArray(array)
 {
     for (let i = array.length - 1; i > 0; i--)
