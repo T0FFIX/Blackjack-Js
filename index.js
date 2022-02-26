@@ -1,7 +1,10 @@
 // array of playing cards
-var cardValues = ["A","2","3","4","5","6","7","8","9","10","J","Q","K"];
 // deck of 52 cards
-let playingDeck = cardValues.concat(cardValues,cardValues,cardValues)
+const playingDeck = [
+    "A♥", "2♥", "3♥", "4♥", "5♥", "6♥", "7♥", "8♥", "9♥", "10♥", "J♥", "Q♥", "K♥",
+    "A♠", "2♠", "3♠", "4♠", "5♠", "6♠", "7♠", "8♠", "9♠", "10♠", "J♠", "Q♠", "K♠",
+    "A♦", "2♦", "3♦", "4♦", "5♦", "6♦", "7♦", "8♦", "9♦", "10♦", "J♦", "Q♦", "K♦",
+    "A♣", "2♣", "3♣", "4♣", "5♣", "6♣", "7♣", "8♣", "9♣", "10♣", "J♣", "Q♣", "K♣"];
 // shuffled deck of 52 cards
 let playingDeckReady = shuffleArray(playingDeck)
 // array of player cards
@@ -49,6 +52,11 @@ function takeCard()
     }
 }
 
+function generateCards(arr)
+{
+
+}
+
 function showCards(arr)
 {
     let showCards = []
@@ -70,13 +78,20 @@ function enough()
     document.getElementById("dealer-field-cards-sum").textContent = checkSumOfCards(dealerCards)
     // check function for who won the round
     whoWon()
+
+    let button = document.createElement("button");
+    button.innerHTML = "Play Again";
+    button.onclick = function playAgain()
+    {
+        location.reload();
+    };
+    document.body.appendChild(button)
 }
 
 function whoWon()
 {
     if(checkSumOfCards(playerCards) > 21 && checkSumOfCards(dealerCards) > 21)
     {
-
         document.getElementById("game-outcome").textContent = "Its a draw"
     }
     else if(checkSumOfCards(playerCards) <= 21 && checkSumOfCards(dealerCards) > 21)
@@ -113,26 +128,31 @@ function checkSumOfCards(arr)
     for (let i = 0; i < arr.length; i++) {
         if (arr[i].match(/[a-z]/i))
         {
-            if (arr[i] === "A")
+            if (arr[i].match("A"))
             {
                 countAces = countAces + 1
             }
-            else if (arr[i] === "J")
+            else if (arr[i].match("J"))
             {
                 sumOfCards = sumOfCards + 2
             }
-            else if (arr[i] === "Q")
+            else if (arr[i].match("Q"))
             {
                 sumOfCards = sumOfCards + 3
             }
-            else if (arr[i] === "K")
+            else if (arr[i].match("K"))
             {
                 sumOfCards = sumOfCards + 4
             }
         }
+        else if (arr[i].match("10"))
+        {
+            sumOfCards = sumOfCards + 10
+        }
         else
         {
-            sumOfCards += parseInt(arr[i])
+            let number = arr[i].slice(0,1)
+            sumOfCards += parseInt(number)
         }
     }
 

@@ -21,3 +21,34 @@ button {
     display: inline-block;
     font-size: 16px;
 }
+
+#card {
+    background: white;
+    width: 86px;
+    height: 120px;
+    border-radius: 5px;
+}
+
+#cardValueUpside {
+    content: attr(value);
+    position: absolute;
+    width: 12px;
+    text-align: center;
+    letter-spacing: -2px;
+    font-size: 14px;
+}
+
+#cardSymbol {
+    font-size: 100px;
+    text-align: center;
+}
+
+#cardValueUpsideDown {
+    position: absolute;
+    width: 160px;
+    text-align: center;
+    letter-spacing: -2px;
+    font-size: 14px;
+    height: 4px;
+    transform: rotate(180deg)
+}
