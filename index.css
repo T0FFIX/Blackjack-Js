@@ -1,14 +1,16 @@
 body {
     background: darkgreen;
     margin: auto;
-    width: 25%;
+    width: 50%;
     border: 3px solid green;
     padding: 10px;
 }
 
 h1 {
+    text-align: center;
     font-style: italic;
     font-palette: light;
+    font-size: 64px;
 }
 
 button {
@@ -51,4 +53,25 @@ button {
     font-size: 14px;
     height: 4px;
     transform: rotate(180deg)
+}
+
+ul {
+    list-style-type: none;
+    line-break: strict;
+}
+
+li {
+    margin: 3px;
+    float: left;
+}
+
+.showedCard {
+    background: white;
+    width: 86px;
+    height: 120px;
+    border-radius: 5px;
+    position: relative;
+    text-align: center;
+    letter-spacing: -2px;
+    font-size: 36px;
 }

@@ -12,22 +12,41 @@ let playerCards = []
 // array of dealer cards
 let dealerCards = []
 
+let playerNewCards = document.createElement("ul")
+let dealerNewCards = document.createElement("ul")
+
 function gameStart()
 {
+    playerNewCards.className = "player-new-cards"
+    document.body.appendChild(playerNewCards)
+    document.body.appendChild(document.createElement("br"))
+
+    dealerNewCards.className = "dealer-new-cards"
+    document.body.appendChild(dealerNewCards)
+
+
     // dealing cards for player and dealer
     playerCards.push(getOneCard())
     dealerCards.push(getOneCard())
     playerCards.push(getOneCard())
     dealerCards.push(getOneCard())
 
+    for (let i = 0; i < playerCards.length; i++)
+    {
+        let singleCard = document.createElement("li")
+        singleCard.className = "showedCard"
+        singleCard.innerHTML = playerCards[i]
+        playerNewCards.appendChild(singleCard)
+    }
+
     // show what cards did the player get
-    document.getElementById("player-field-cards").textContent = showCards(playerCards)
+    // document.getElementById("player-field-cards").textContent = showCards(playerCards)
 
     // show total points for the player
     document.getElementById("player-field-cards-sum").textContent = checkSumOfCards(playerCards)
 
     // show to player the second card from the dealer
-    document.getElementById("dealer-field-cards").textContent = ["? " + dealerCards[1]]
+    // document.getElementById("dealer-field-cards").textContent = ["? " + dealerCards[1]]
 }
 
 // get first item for the shuffled deck
@@ -42,7 +61,14 @@ function getOneCard()
 function takeCard()
 {
     playerCards.push(getOneCard())
-    document.getElementById("player-field-cards").textContent = showCards(playerCards)
+
+    let singleCard = document.createElement("li")
+    singleCard.className = "showedCard"
+    singleCard.innerHTML = playerCards[playerCards.length-1]
+    playerNewCards.appendChild(singleCard)
+
+
+    // document.getElementById("player-field-cards").textContent = showCards(playerCards)
     document.getElementById("player-field-cards-sum").textContent = checkSumOfCards(playerCards)
     // simple check if the player got more than 21 and automatically lost
     if(checkSumOfCards(playerCards) > 21)
@@ -50,11 +76,6 @@ function takeCard()
         // start dealer turn to make a decision
         enough()
     }
-}
-
-function generateCards(arr)
-{
-
 }
 
 function showCards(arr)
@@ -73,9 +94,17 @@ function enough()
     while (checkSumOfCards(dealerCards) < 17)
     {
         dealerCards.push(getOneCard())
+
+        // let singleCard = document.createElement("li")
+        // singleCard.className = "showedCard"
+        // singleCard.innerHTML = dealerCards[dealerCards.length-1]
+        // dealerNewCards.appendChild(singleCard)
+
     }
-    document.getElementById("dealer-field-cards").textContent = dealerCards
+    // document.getElementById("dealer-field-cards").textContent = showCards(dealerCards)
     document.getElementById("dealer-field-cards-sum").textContent = checkSumOfCards(dealerCards)
+    document.getElementById("button-get-card").disabled = true;
+    document.getElementById("button-enough").disabled = true;
     // check function for who won the round
     whoWon()
 
