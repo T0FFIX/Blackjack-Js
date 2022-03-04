@@ -5,25 +5,26 @@ const playingDeck = [
     "A♠", "2♠", "3♠", "4♠", "5♠", "6♠", "7♠", "8♠", "9♠", "10♠", "J♠", "Q♠", "K♠",
     "A♦", "2♦", "3♦", "4♦", "5♦", "6♦", "7♦", "8♦", "9♦", "10♦", "J♦", "Q♦", "K♦",
     "A♣", "2♣", "3♣", "4♣", "5♣", "6♣", "7♣", "8♣", "9♣", "10♣", "J♣", "Q♣", "K♣"];
+
 // shuffled deck of 52 cards
 let playingDeckReady = shuffleArray(playingDeck)
+
 // array of player cards
 let playerCards = []
+
 // array of dealer cards
 let dealerCards = []
 
+// player and dealer cards display
 let playerNewCards = document.createElement("ul")
 let dealerNewCards = document.createElement("ul")
 
 function gameStart()
 {
     playerNewCards.className = "player-new-cards"
-    document.body.appendChild(playerNewCards)
-    document.body.appendChild(document.createElement("br"))
-
+    document.getElementById("player-field-cards").appendChild(playerNewCards)
     dealerNewCards.className = "dealer-new-cards"
-    document.body.appendChild(dealerNewCards)
-
+    document.getElementById("dealer-field-cards").appendChild(dealerNewCards)
 
     // dealing cards for player and dealer
     playerCards.push(getOneCard())
@@ -31,6 +32,7 @@ function gameStart()
     playerCards.push(getOneCard())
     dealerCards.push(getOneCard())
 
+    // show what cards did the player get
     for (let i = 0; i < playerCards.length; i++)
     {
         let singleCard = document.createElement("li")
@@ -39,14 +41,24 @@ function gameStart()
         playerNewCards.appendChild(singleCard)
     }
 
-    // show what cards did the player get
-    // document.getElementById("player-field-cards").textContent = showCards(playerCards)
-
     // show total points for the player
     document.getElementById("player-field-cards-sum").textContent = checkSumOfCards(playerCards)
 
     // show to player the second card from the dealer
-    // document.getElementById("dealer-field-cards").textContent = ["? " + dealerCards[1]]
+    for (let i = 0; i < dealerCards.length; i++)
+    {
+        let singleCard = document.createElement("li")
+        singleCard.className = "showedCard"
+        singleCard.innerHTML = dealerCards[i]
+
+        // hide first card and its value
+        if (i === 0)
+        {
+            singleCard.className = "closedCard"
+            singleCard.innerHTML = "?"
+        }
+        dealerNewCards.appendChild(singleCard)
+    }
 }
 
 // get first item for the shuffled deck
@@ -62,14 +74,15 @@ function takeCard()
 {
     playerCards.push(getOneCard())
 
+    // display card
     let singleCard = document.createElement("li")
     singleCard.className = "showedCard"
     singleCard.innerHTML = playerCards[playerCards.length-1]
     playerNewCards.appendChild(singleCard)
 
-
-    // document.getElementById("player-field-cards").textContent = showCards(playerCards)
+    // update number of points
     document.getElementById("player-field-cards-sum").textContent = checkSumOfCards(playerCards)
+
     // simple check if the player got more than 21 and automatically lost
     if(checkSumOfCards(playerCards) > 21)
     {
@@ -78,36 +91,38 @@ function takeCard()
     }
 }
 
-function showCards(arr)
-{
-    let showCards = []
-    for (let i = 0; i < arr.length; i++)
-    {
-        showCards += arr[i] +" "
-    }
-    return showCards
-}
-
 // dealer function that makes decisions automatically
 function enough()
 {
+    // show the hidden card
+    let unseenCard = document.getElementsByClassName("closedCard")
+    unseenCard.item(0).innerHTML = dealerCards[0]
+    unseenCard.item(0).className = "showedCard"
+
+    //dealer approach to the game/casino rules
     while (checkSumOfCards(dealerCards) < 17)
     {
         dealerCards.push(getOneCard())
 
-        // let singleCard = document.createElement("li")
-        // singleCard.className = "showedCard"
-        // singleCard.innerHTML = dealerCards[dealerCards.length-1]
-        // dealerNewCards.appendChild(singleCard)
+        // display card
+        let singleCard = document.createElement("li")
+        singleCard.className = "showedCard"
+        singleCard.innerHTML = dealerCards[dealerCards.length-1]
+        dealerNewCards.appendChild(singleCard)
 
     }
-    // document.getElementById("dealer-field-cards").textContent = showCards(dealerCards)
+
+    // update points for dealer
     document.getElementById("dealer-field-cards-sum").textContent = checkSumOfCards(dealerCards)
+
+    // disable buttons
     document.getElementById("button-get-card").disabled = true;
     document.getElementById("button-enough").disabled = true;
+
     // check function for who won the round
     whoWon()
 
+    // ask for play again
     let button = document.createElement("button");
     button.innerHTML = "Play Again";
     button.onclick = function playAgain()
@@ -117,6 +132,7 @@ function enough()
     document.body.appendChild(button)
 }
 
+// compare who won depending on cards
 function whoWon()
 {
     if(checkSumOfCards(playerCards) > 21 && checkSumOfCards(dealerCards) > 21)
@@ -196,10 +212,14 @@ function checkSumOfCards(arr)
         {
             sumOfCards = sumOfCards + countAces
         }
-        else if (sumOfCards + countAces < 11)
+        else if (sumOfCards + countAces <= 11)
         {
             sumOfCards = sumOfCards + 11 + (countAces - 1)
         }
+    }
+    else if (sumOfCards === 0 && countAces > 2)
+    {
+        sumOfCards = sumOfCards + 11 + (countAces - 1)
     }
 
     return sumOfCards

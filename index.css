@@ -23,6 +23,29 @@ button {
     display: inline-block;
     font-size: 16px;
 }
+#player-cards {
+    display: inline-block;
+    line-break: auto;
+    height: auto;
+}
+
+#dealer-cards {
+    display: inline-block;
+    line-break: auto;
+    height: auto;
+}
+
+#game-outcome {
+    padding: 10px;
+    height: auto;
+    font-size: 32px;
+    text-align: center;
+}
+
+#buttons {
+    display: inline-block;
+    height: auto;
+}
 
 #card {
     background: white;
@@ -55,6 +78,18 @@ button {
     transform: rotate(180deg)
 }
 
+h3 {
+    font-size: 36px;
+}
+
+#dealer-field-cards-sum {
+    font-size: 24px;
+}
+
+#player-field-cards-sum {
+    font-size: 24px;
+}
+
 ul {
     list-style-type: none;
     line-break: strict;
@@ -65,13 +100,24 @@ li {
     float: left;
 }
 
+
 .showedCard {
+    content: inherit;
     background: white;
     width: 86px;
     height: 120px;
     border-radius: 5px;
-    position: relative;
-    text-align: center;
     letter-spacing: -2px;
-    font-size: 36px;
+    font-size: 54px;
+    text-align: center;
+}
+
+.closedCard {
+    width: 86px;
+    height: 120px;
+    border-radius: 5px;
+    position: relative;
+    text-indent: -4000px;
+    background-color: darkgrey;
+
 }
