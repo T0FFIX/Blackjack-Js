@@ -14,15 +14,32 @@ h1 {
 }
 
 button {
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
+    width: 150px;
+    height: 50px;
+    box-shadow: 0 10px 14px -7px #3e7327;
+    background: #77b55a linear-gradient(to bottom, #77b55a 5%, #72b352 100%);
+    border-radius:4px;
+    border:1px solid #4b8f29;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family: Arial, serif;
+    font-size:16px;
+    font-weight:bold;
+    padding:6px 12px;
+    text-decoration:none;
+    text-shadow:0 1px 0 #5b8a3c;
 }
+
+button:hover {
+    background: #72b352 linear-gradient(to bottom, #72b352 5%, #77b55a 100%);
+}
+
+button:active {
+    position:relative;
+    top:1px;
+}
+
 #player-cards {
     display: inline-block;
     line-break: auto;
@@ -36,15 +53,16 @@ button {
 }
 
 #game-outcome {
+    text-align: center;
+    display: block;
     padding: 10px;
     height: auto;
     font-size: 32px;
-    text-align: center;
 }
 
 #buttons {
-    display: inline-block;
-    height: auto;
+    text-align: center;
+    display: block;
 }
 
 #card {
@@ -99,7 +117,6 @@ li {
     margin: 3px;
     float: left;
 }
-
 
 .showedCard {
     display: inline-block;
